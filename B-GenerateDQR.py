@@ -19,16 +19,18 @@ except:
 
 
 # Define if name is continuous or categorical
-#continuous_names, categorical_names = make_list_name(datas)
-
 continuous_names = datas.select_dtypes(exclude=[object])
 categorical_names = datas.select_dtypes(include=[object])
 
+# Define the list of dictionnaries feature -> cardinalities
+all_names = categorical_names+continuous_names
+list_of_cardinalities = dict(zip(all_names, [None]*len(all_names)))
+
 # Write in a new csv file for continuous features.
-dqr_continuous(datas, continuous_names)
+dqr_continuous(datas, continuous_names, list_of_cardinalities)
 # Write in a new csv file for categorical features.
-dqr_categorical(datas, categorical_names)
+dqr_categorical(datas, categorical_names, list_of_cardinalities)
 
 # Generate graphs (html local files) for all continuous features.
-generate_graphs(datas, continuous_names, True)
-generate_graphs(datas, categorical_names, False)
+generate_graphs(datas, continuous_names, True, list_of_cardinalities)
+generate_graphs(datas, categorical_names, False, list_of_cardinalities)
