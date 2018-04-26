@@ -12,6 +12,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 
 
@@ -42,6 +43,7 @@ models = []
 models.append(('CART', DecisionTreeClassifier()))
 models.append(('KNN', KNeighborsClassifier()))
 models.append(('GNB', GaussianNB()))
+models.append(('GNB', RandomForestClassifier()))
 
 # Split data into training and validation sets
 array = dataset_v2.values
