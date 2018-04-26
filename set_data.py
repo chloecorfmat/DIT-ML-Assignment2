@@ -15,15 +15,19 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 
+from DQR_ModifyDataSet import *
 
 # Load dataset
 dataset = pandas.read_csv("./dataset_diabetes/diabetic_data.csv", header=0)
 headers = list(dataset.columns.values)
 
+# Modify DataSet according to features value, missings and outliers
+dataset = modify_dataset(dataset, headers)
+
 # Isolate categorical and continuous features
 categorical_data = dataset.select_dtypes(include=[object])
 continuous_data = dataset.select_dtypes(exclude=[object])
-#print(continuous_data.columns)
+
 
 # Create a LabelEncoder object and fit it to each feature of categorical_data
 # Encode labels with value between 0 and n_classes-1
@@ -36,7 +40,7 @@ categorical_data_v2 = categorical_data.apply(label.fit_transform)
 
 # New dataset
 dataset_v2 = pandas.concat([continuous_data, categorical_data_v2], axis=1)
-# print(dataset_v2.head(2))
+
 
 # Prediction models
 models = []

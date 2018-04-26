@@ -2,14 +2,15 @@ from collections import Counter
 import operator
 import csv
 
-def count_modes(list_of_cardinalities, feature):
-    sorted_possible_values_with_cardinality = sorted(list_of_cardinalities[feature].items(),key=operator.itemgetter(1))
-    length = len(sorted_possible_values_with_cardinality)
-    mode = sorted_possible_values_with_cardinality[length - 1][0]
-    mode_freq = sorted_possible_values_with_cardinality[length - 1][1]
-    second_mode = sorted_possible_values_with_cardinality[length - 2][0]
-    second_mode_freq = sorted_possible_values_with_cardinality[length - 2][1]
-    return mode, mode_freq, second_mode, second_mode_freq
+class Toolkit():
+    def count_modes(list_of_cardinalities, feature):
+        sorted_possible_values_with_cardinality = sorted(list_of_cardinalities[feature].items(),key=operator.itemgetter(1))
+        length = len(sorted_possible_values_with_cardinality)
+        mode = sorted_possible_values_with_cardinality[length - 1][0]
+        mode_freq = sorted_possible_values_with_cardinality[length - 1][1]
+        second_mode = sorted_possible_values_with_cardinality[length - 2][0]
+        second_mode_freq = sorted_possible_values_with_cardinality[length - 2][1]
+        return mode, mode_freq, second_mode, second_mode_freq
 
 # define whether category is continuous or categorical
 def make_list_name(datas):
@@ -56,7 +57,7 @@ def dqr_categorical(datas, categorical_names, list_of_cardinalities):
             count = datas[feature].count()
             miss = list_of_cardinalities[feature]["?"] * 100 / count
             card = len(list_of_cardinalities[feature])
-            mode, mode_freq, second_mode, second_mode_freq = count_modes(list_of_cardinalities, feature)
+            mode, mode_freq, second_mode, second_mode_freq = Toolkit.count_modes(list_of_cardinalities, feature)
             mode_perc = (count - mode_freq) * 100 / count
             second_mode_perc = (count - second_mode_freq) * 100 / count
             filewriter.writerow([feature, count, miss, card, mode, mode_freq, mode_perc, second_mode, second_mode_freq, second_mode_perc])

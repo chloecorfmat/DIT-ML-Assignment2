@@ -22,7 +22,7 @@ except:
 continuous_names = datas.select_dtypes(exclude=[object])
 categorical_names = datas.select_dtypes(include=[object])
 
-# Define the list of dictionnaries feature -> cardinalities
+# Define the list of dictionnaries : feature -> cardinalities
 all_names = categorical_names+continuous_names
 list_of_cardinalities = dict(zip(all_names, [None]*len(all_names)))
 
